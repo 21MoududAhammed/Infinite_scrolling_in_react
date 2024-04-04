@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useRef } from "react";
 import { useState } from "react";
+import ProductCard from "./components/ProductCard";
 
 const productsPerPage = 10;
 
@@ -19,7 +20,7 @@ export default function App() {
         }`
       );
       const data = await res.json();
-      // console.log(data);
+
       if (data.products.length === 0) {
         setWillLoad(false);
       } else {
@@ -27,9 +28,10 @@ export default function App() {
         setPage((prevPage) => prevPage + 1);
       }
     };
-    console.log(products);
+
     const observer = new IntersectionObserver((items) => {
       const loaderItem = items[0];
+
       if (loaderItem.isIntersecting && willLoad) {
         loadProducts();
       }
@@ -43,8 +45,12 @@ export default function App() {
 
   return (
     <div>
-      <div>{/* to show products  */}</div>
-      <div ref={loaderRef}>Loading more.....</div>
+      {products?.map((product) => (
+        <ProductCard key={product.id} product={product} />
+      ))}
+      <div ref={loaderRef}>
+        <h4 className="text-center">Loading.....</h4>
+      </div>
     </div>
   );
 }
