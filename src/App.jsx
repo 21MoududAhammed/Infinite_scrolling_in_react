@@ -44,13 +44,15 @@ export default function App() {
   }, [page, willLoad]);
 
   return (
-    <div>
+    <div className="mb-10">
       {products?.map((product) => (
         <ProductCard key={product.id} product={product} />
       ))}
-      <div ref={loaderRef}>
-        <h4 className="text-center">Loading.....</h4>
-      </div>
+      
+        <div ref={loaderRef}>
+          <h4 className={`text-center ${!willLoad && 'hidden'}`}>Loading.....</h4>
+        </div>
+    
     </div>
   );
 }
